@@ -1,0 +1,19 @@
+{
+  "name": "wifree",
+  "version": "1.0.0",
+  "description": "This project's aim is to provide free internet passwords from most pubs and public locations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lilianacandrea/wifree.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lilianacandrea/wifree/issues"
+  },
+  "homepage": "https://github.com/lilianacandrea/wifree#readme"
+}
