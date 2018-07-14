@@ -17,6 +17,16 @@
   },
   "homepage": "https://github.com/lilianacandrea/wifree#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "lodash": "^4.17.10",
+    "mongodb": "^3.0.1",
+    "mongoose": "^4.5.9",
+    "save": "^2.3.2",
+    "validator": "^10.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.2"
   }
 }
