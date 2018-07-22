@@ -125,6 +125,5 @@ describe('PATCH /locations/:id', () => {
         expect(res.body.location.address).toBe(address);
       })
       .end(done);
-
   });
 });
