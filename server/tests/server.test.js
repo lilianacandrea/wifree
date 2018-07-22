@@ -78,7 +78,6 @@ describe('GET /locations', () => {
   });
 });
 
-
 describe('GET /locations/:id', () => {
   it('should return location doc', (done) => {
     request(app)
@@ -105,5 +104,27 @@ describe('GET /locations/:id', () => {
       .get('/locations/123abc')
       .expect(404)
       .end(done);
+  });
+});
+
+describe('PATCH /locations/:id', () => {
+  it('should update the location', (done) => {
+    var hexId = locations[0]._id.toHexString();
+    var locationName = 'locationn';
+    var address = 'addresss';
+
+    request(app)
+      .patch(`/locations/${hexId}`)
+      .send({
+        locationName,
+        address
+      })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.location.locationName).toBe(locationName);
+        expect(res.body.location.address).toBe(address);
+      })
+      .end(done);
+
   });
 });
