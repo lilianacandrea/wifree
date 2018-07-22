@@ -1,25 +1,18 @@
 const mongoose = require('mongoose');
 
-var LocationSchema = mongoose.model('Location', {
+var LocationModel = mongoose.model('Location', {
   locationName: {
     type: String,
-    required: true
+    required: true,
+    minlength: 1,
+    trim: true
   },
   address: {
     type: String,
-    require: true
+    required: true,
+    minlength: 1,
+    trim: true,
   }
 });
 
-var newLocation = new LocationSchema({
-  locationName: 'mitzi@coadademaimuta.com',
-  address: 'mitzi@coadademaimuta.com',
-});
-newLocation.save().then((doc) => {
-  console.log(JSON.stringify(doc, undefined, 2));
-}, (err) => {
-  console.log('Unable to save location', err);
-});
-
-// var LocationAddress = mongoose.model('Location', LocationSchema);
-module.exports = {LocationSchema};
+module.exports = {LocationModel};
