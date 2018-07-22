@@ -4,8 +4,18 @@ const request = require('supertest');
 const {app} = require('./../server');
 const {LocationAddress} = require('./../models/location');
 
+const locations = [{
+  locationName:  'Booha',
+  address: 'Strada Pupazei'
+}, {
+  locationName:  'Bistro',
+  address: 'Strada Paunului'
+}];
+
 beforeEach((done) => {
-  LocationAddress.remove({}).then(() => done());
+  LocationAddress.remove({}).then(() => {
+    return LocationAddress.insertMany(locations);
+  }).then(() => done());
 });
 
 describe('POST /locations', () => {
@@ -15,10 +25,11 @@ describe('POST /locations', () => {
   //
   //   request(app)
   //     .post('/locations')
-  //     .send({location}, {address} )
+  //     .send({location, address} )
   //     .expect(200)
   //     .expect((res) => {
   //       expect(res.body.locationName).toBe(location);
+  //       expect(res.body.address).toBe(address);
   //     })
   //     .end((err, res) => {
   //       if(err) {
@@ -26,8 +37,8 @@ describe('POST /locations', () => {
   //       }
   //
   //       LocationAddress.find().then((locations) => {
-  //         expect(locations.length).toBe(1);
   //         expect(locations[0].locationName).toBe(location);
+   //        expect(locations[1].address).toBe(address);
   //         done();
   //       }).catch((e) => done(e));
   //     });
@@ -44,9 +55,21 @@ describe('POST /locations', () => {
         }
 
         LocationAddress.find().then((locations) => {
-          expect(locations.length).toBe(0);
+          expect(locations.length).toBe(2);
           done();
         }).catch((e) => done(e));
       });
+  });
+});
+
+describe('GET /locations', () => {
+  it('should get all locations ', (done) => {
+    request(app)
+      .get('/locations')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.locations.length).toBe(2);
+      })
+      .end(done);
   });
 });
