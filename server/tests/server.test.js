@@ -1,13 +1,17 @@
 const expect = require('expect');
 const request = require('supertest');
 
+const {ObjectID} = require('mongodb');
+
 const {app} = require('./../server');
 const {LocationAddress} = require('./../models/location');
 
 const locations = [{
+  _id: new ObjectID,
   locationName:  'Booha',
   address: 'Strada Pupazei'
 }, {
+  _id: new ObjectID,
   locationName:  'Bistro',
   address: 'Strada Paunului'
 }];
@@ -70,6 +74,36 @@ describe('GET /locations', () => {
       .expect((res) => {
         expect(res.body.locations.length).toBe(2);
       })
+      .end(done);
+  });
+});
+
+
+describe('GET /locations/:id', () => {
+  it('should return location doc', (done) => {
+    request(app)
+      .get(`/locations/${locations[0]._id.toHexString()}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.location.locationName).toBe(locations[0].locationName);
+        expect(res.body.location.address).toBe(locations[0].address);
+      })
+      .end(done);
+  });
+
+  it('should return 404 if location not found', (done) => {
+    var hexId = new ObjectID().toHexString();
+
+    request(app)
+      .get(`/locations/${hexId}`)
+      .expect(404)
+      .end(done);
+  });
+
+  it('should return 404 for non-object ids', (done) => {
+    request(app)
+      .get('/locations/123abc')
+      .expect(404)
       .end(done);
   });
 });

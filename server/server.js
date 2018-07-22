@@ -35,6 +35,24 @@ app.get('/locations', (req, res) => {
   })
 });
 
+app.get('/locations/:id', (req, res) => {
+  var id = req.params.id;
+
+  if(!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  LocationAddress.findById(id).then((location) => {
+    if (!location) {
+      return res.status(404).send();
+    }
+
+    res.send({location});
+  }).catch((e) => {
+    res.status(400).send();
+  });
+});
+
 app.listen(port, () => {
   console.log(`Started up at port ${port}.`);
 });
