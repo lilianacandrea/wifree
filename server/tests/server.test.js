@@ -2,10 +2,10 @@ const expect = require('expect');
 const request = require('supertest');
 
 const {app} = require('./../server');
-const {LocationModel} = require('./../models/location');
+const {LocationAddress} = require('./../models/location');
 
 beforeEach((done) => {
-  LocationModel.remove({}).then(() => done());
+  LocationAddress.remove({}).then(() => done());
 });
 
 describe('POST /locations', () => {
@@ -19,17 +19,15 @@ describe('POST /locations', () => {
   //     .expect(200)
   //     .expect((res) => {
   //       expect(res.body.locationName).toBe(location);
-  //       expect(res.body.address).toBe(address);
   //     })
   //     .end((err, res) => {
   //       if(err) {
   //         return done(err);
   //       }
   //
-  //       LocationModel.find().then((locations) => {
+  //       LocationAddress.find().then((locations) => {
   //         expect(locations.length).toBe(1);
   //         expect(locations[0].locationName).toBe(location);
-  //         expect(locations[1].address).toBe(address);
   //         done();
   //       }).catch((e) => done(e));
   //     });
@@ -45,7 +43,7 @@ describe('POST /locations', () => {
           return done(err);
         }
 
-        LocationModel.find().then((locations) => {
+        LocationAddress.find().then((locations) => {
           expect(locations.length).toBe(0);
           done();
         }).catch((e) => done(e));

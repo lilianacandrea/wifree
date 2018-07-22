@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const {ObjectID} = require('mongodb');
 
 const {mongoose} = require('./db/mongoose');
-const {LocationModel} = require('./models/location');
+const {LocationAddress} = require('./models/location');
 const {Network} = require('./models/network');
 
 var app = express();
@@ -15,7 +15,7 @@ const port = process.env.PORT;
 app.use(bodyParser.json());
 
 app.post('/locations', (req, res) => {
-  var location = new LocationModel({
+  var location = new LocationAddress({
     locationName: req.body.locationName,
     address: req.body.address
   });
@@ -27,6 +27,13 @@ app.post('/locations', (req, res) => {
   });
 });
 
+app.get('/locations', (req, res) => {
+  LocationAddress.find().then((locations) => {
+    res.send({locations});
+  }, (e) => {
+    res.status(400).send(e);
+  })
+});
 
 app.listen(port, () => {
   console.log(`Started up at port ${port}.`);

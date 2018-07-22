@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var LocationModel = mongoose.model('Location', {
+var LocationAddress = mongoose.model('Location', {
   locationName: {
     type: String,
     required: true,
@@ -15,4 +15,4 @@ var LocationModel = mongoose.model('Location', {
   }
 });
 
-module.exports = {LocationModel};
+module.exports = {LocationAddress};
