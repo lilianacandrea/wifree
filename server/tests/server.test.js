@@ -127,3 +127,41 @@ describe('PATCH /locations/:id', () => {
       .end(done);
   });
 });
+
+describe('DELETE /locations/:id', (req, res) => {
+  it('should remove a location', (done) => {
+    var hexId = locations[1]._id.toHexString();
+    request(app)
+      .delete(`/locations/${hexId}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.location._id).toBe(hexId);
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        LocationAddress.findById(hexId).then((location) => {
+        expect(location).toBeFalsy();
+        done();
+        }).catch((e) => done(e));
+      });
+  });
+
+  it('should return 404 if location not found', (done) => {
+    var hexId = new ObjectID().toHexString();
+
+    request(app)
+      .delete(`/locations/${hexId}`)
+      .expect(404)
+      .end(done);
+  });
+
+  it('should return if object id is invalid', (done) => {
+    request(app)
+      .delete(`/locations/123abc`)
+      .expect(404)
+      .end(done);
+  });
+});
